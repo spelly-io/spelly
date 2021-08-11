@@ -1,0 +1,31 @@
+name: Update version
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+jobs:
+   main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update package.json version
+        run: |
+          git clone https://$GIT_LAB_USERNAME:$ACCESS_TOKEN@gitlab.com/$CI_PROJECT_PATH.git --depth 1 spelly
+          cd ./spelly && NEW_NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version") && cd ../ && rm -rf ./spelly
+          echo $NEW_NPM_PACKAGE_VERSION
+          node ./scripts/replace-version.js $NEW_NPM_PACKAGE_VERSION
+        env:
+          GIT_LAB_USERNAME: ${{ secrets.GIT_LAB_USERNAME }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          CI_PROJECT_PATH: ${{ secrets.CI_PROJECT_PATH }}
+      - name: Check if there are changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.11
+      - name: push
+        if: steps.changes.outputs.changed == 1
+        run: |
+          git config --global user.name 'Spelly CI'
+          git config --global user.email 'support@spelly.io'
+          git add package.json
+          git commit -m 'Update version'
+          git push
