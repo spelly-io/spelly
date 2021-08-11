@@ -1,0 +1,14 @@
+{
+  "name": "spelly",
+  "version": "3.32.35",
+  "description": "Repository with actual version of Spelly plugin for plugin directory",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spelly-io/spelly.git"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/spelly-io/spelly/issues"
+  },
+  "homepage": "https://github.com/spelly-io/spelly#readme"
+}
