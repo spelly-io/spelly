@@ -1,7 +1,7 @@
 {
   "name": "spelly",
   "private": true,
-  "version": "3.32.37",
+  "version": "3.32.38",
   "description": "Repository with actual version of Spelly plugin for plugin directory",
   "repository": {
     "type": "git",
